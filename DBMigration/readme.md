@@ -8,12 +8,6 @@ docker exec -it sql_2019 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa
 
 docker exec sql-win cmd.exe /C "sqlcmd -U sa -S localhost -P 1Secure*Password1 -i c:\data\query.txt"
 
-
-
-
-
-
-
 VS
 dotnet tool install --global dotnet-ef
 dotnet ef migrations add MyFirstMigration
