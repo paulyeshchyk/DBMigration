@@ -11,7 +11,7 @@ namespace DBMigration
     public ApplicationDbContext CreateDbContext(string[] args)
     {
       var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-      optionsBuilder.UseSqlServer("TrustServerCertificate=True;Data Source=localhost;Initial Catalog=ankara1;User ID=ankaraUser;Password=user123!");
+      optionsBuilder.UseSqlServer("TrustServerCertificate=True;Data Source=localhost;Initial Catalog=ankara;User ID=ankaraUser;Password=user123!");
 
       return new ApplicationDbContext(optionsBuilder.Options);
     }

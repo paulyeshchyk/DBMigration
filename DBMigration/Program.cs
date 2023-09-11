@@ -11,6 +11,7 @@ public class Program
     IQueryable<User> set = dbSet.Where(u => name.Equals(u.Name));
     if (set.Count() == 1)
     {
+      Console.WriteLine($"Found user by name: {name}");
       return set.First();
     }
     Console.WriteLine($"Adding user by name: {name}");
@@ -20,11 +21,34 @@ public class Program
     return result;
   }
 
+  private static Contract FindOrCreateContract(Company company, Outsourcer outsorser, List<User> users, Microsoft.EntityFrameworkCore.DbSet<Contract> dbSet)
+  {
+
+    IQueryable<Contract> set = dbSet.Where(c => c.Outsourcer == outsorser && c.Company == company);
+    if (set.Count() == 1)
+    {
+      Console.WriteLine($"Found contract for outsourcer: {outsorser.Name}");
+      return set.First();
+    }
+
+    Contract contract = new Contract();
+    contract.Company = company;
+    contract.Outsourcer = outsorser;
+    
+    foreach (User user in users) {
+      contract.Users.Add(user);
+    }
+    dbSet.Add(contract);
+    
+    return contract;
+  }
+
   private static Outsourcer FindOrCreateOutsourcerByName(string name, Microsoft.EntityFrameworkCore.DbSet<Outsourcer> dbSet)
   {
     IQueryable<Outsourcer> set = dbSet.Where(o => name.Equals(o.Name));
     if (set.Count() == 1)
     {
+      Console.WriteLine($"Found outsourcer by name: {name}");
       return set.First();
     }
 
@@ -39,6 +63,7 @@ public class Program
     IQueryable<Company> set = dbSet.Where(c => name.Equals(c.Name));
     if (set.Count() == 1)
     {
+      Console.WriteLine($"Found company by name: {name}");
       return set.First();
     }
 
@@ -55,29 +80,20 @@ public class Program
 
       User user1 = FindOrCreateUserByName("Tom21", db.Users);
       User user2 = FindOrCreateUserByName("Alice1", db.Users);
-
       Outsourcer outsourcer = FindOrCreateOutsourcerByName("Outsourcer1", db.Outsourcers);
-      //user1.employers.Add(outsourcer);
-      //user2.employers.Add(outsourcer);
-      //outsourcer.employees.Add(user1);
-      //outsourcer.employees.Add(user2);
-
       Company company1 = FindOrCreateCompanyByName("Company1", db.Companies);
-      company1.Outsourcer = outsourcer;
-
       Company company2 = FindOrCreateCompanyByName("Company2", db.Companies);
-      company2.Outsourcer = outsourcer;
 
-      user1.Companies?.Add(company1);
-      user2.Companies?.Add(company2);
+      Contract contract = FindOrCreateContract(company1, outsourcer, new List<User> { user1 }, db.Contracts);
+
+      Contract contract2 = FindOrCreateContract(company2, outsourcer, new List<User> { user1, user2 }, db.Contracts);
+
+
+      //db.Entry(contract2).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+
+
 
       db.SaveChanges();
-
-      //db.Entry(outsourcer).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-      //Outsourcer objectToRemove = db.Outsourcers.Where(o => o.Id == outsourcer.Id).First();
-      //db.Outsourcers.Remove(objectToRemove);
-      //db.SaveChanges();
-
 
 
       Console.WriteLine("Объекты успешно сохранены");
@@ -99,8 +115,6 @@ public class Program
 
     using (ApplicationDbContext db = new ApplicationDbContext())
     {
-
-
 
       //IEnumerable<Company> companies = db.Companies.Where(
       //  c => c.Name.Contains("Company1")

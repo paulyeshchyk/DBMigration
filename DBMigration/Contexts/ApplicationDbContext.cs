@@ -11,6 +11,7 @@ namespace DBMigration.Contexts
     public DbSet<User> Users { get; set; }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Outsourcer> Outsourcers { get; set; }
+    public DbSet<Contract> Contracts { get; set; }
 
     public ApplicationDbContext()
     {
@@ -33,7 +34,7 @@ namespace DBMigration.Contexts
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
-      string connectionString = "TrustServerCertificate=True;Data Source=localhost;Initial Catalog=ankara1;User ID=ankaraUser;Password=user123!";
+      string connectionString = "TrustServerCertificate=True;Data Source=localhost;Initial Catalog=ankara;User ID=ankaraUser;Password=user123!";
       if (!optionsBuilder.IsConfigured)
       {
 
@@ -42,7 +43,8 @@ namespace DBMigration.Contexts
           optionsBuilder
             //.UseLoggerFactory(loggerFactory)
             .EnableSensitiveDataLogging()
-            .UseSqlServer(connectionString);
+            .UseSqlServer(connectionString)
+            .LogTo(Console.WriteLine);
         }
       }
 

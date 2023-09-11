@@ -5,7 +5,6 @@ namespace DBMigration.Entities
   {
     public int Id { get; set; }
     public string Name { get; set; }
-    public Outsourcer? Outsourcer { get; set; }
     public Company()
     {
       Name = string.Empty;

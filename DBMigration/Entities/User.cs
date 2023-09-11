@@ -7,14 +7,10 @@ namespace DBMigration.Entities
     public string? Name { get; set; }
     public string? Surname { get; set; }
     public int? Age { get; set; }
-    public List<Company> Companies { get; set; }
-
-    public List<Outsourcer> employers { get; set; }
+    public List<Contract>? contracts { get; set; }
 
     public User()
     {
-      Companies = new List<Company>();
-      employers = new List<Outsourcer>();
     }
   }
 }
