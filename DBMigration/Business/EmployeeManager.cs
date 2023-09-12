@@ -60,13 +60,13 @@ namespace DBMigration.Business
     public static void DrawList()
     {
       using AppDbContext appDbContext = new();
-      var table = new ConsoleTable("Name", "Age");
+      var table = new ConsoleTable("Id","Name", "Age");
       var result = (from list
                    in appDbContext.Employees
                     select list).ToList();
       foreach (var employee in result)
       {
-        table.AddRow(employee.Name, employee.Age);
+        table.AddRow(employee.Id, employee.Name, employee.Age);
       };
       table.Write(ConsoleTables.Format.Default);
     }

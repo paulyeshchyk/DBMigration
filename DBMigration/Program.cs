@@ -7,7 +7,7 @@ public class Program
 
   public static void Main(string[] args)
   {
-    navigator.DrawNodes(NavigatorNodeFactory.Level0Nodes);
+    navigator.DrawNodes(NavigatorNodeFactory.LevelRootNodes);
     navigator.Loop();
   }
 }
