@@ -4,9 +4,9 @@
   {
     public int Id { get; set; }
     public string Subject { get; set; } = string.Empty;
-    public RefContractor contractor { get; set; } = null!;
-    public RefCustomer customer { get; set; } = null!;
-    public List<RefEmployee> resources { get; set; } = new List<RefEmployee>();
+    public RefContractor Contractor { get; set; } = null!;
+    public RefCustomer Customer { get; set; } = null!;
+    public List<RefEmployee> Resources { get; set; } = new List<RefEmployee>();
     public List<DocCustomerContractInvoce> Invoces { get; set; } = new List<DocCustomerContractInvoce>();
   }
 }
