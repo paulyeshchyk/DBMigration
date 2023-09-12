@@ -1,21 +1,21 @@
-﻿using System;
-using DBMigration.Entities;
+﻿using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 namespace DBMigration.Contexts
 {
-  public class ContractContext : DbContext
+  public class AppDbContext : DbContext
   {
     public DbSet<RefEmployee> Employees { get; set; }
     public DbSet<RefCustomer> Customer { get; set; }
     public DbSet<RefContractor> Contractor { get; set; }
     public DbSet<DocCustomerContract> CustomerContract { get; set; }
     public DbSet<DocEmployeeContract> EmployeeContract { get; set; }
-    public ContractContext()
+    public DbSet<DocEmployeeContractAddendum> EmployeeContractAddendum { get; set; }
+    public DbSet<DocCustomerContractInvoce> CustomerContractInvoces {get; set; }
+    public AppDbContext()
     {
       //Database.EnsureCreated();
     }
-    public ContractContext(DbContextOptions<ContractContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
@@ -23,7 +23,7 @@ namespace DBMigration.Contexts
     {
       base.OnModelCreating(modelBuilder);
     }
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       string connectionString = "TrustServerCertificate=True;Data Source=localhost;Initial Catalog=ankara;User ID=ankaraUser;Password=user123!";
@@ -34,7 +34,7 @@ namespace DBMigration.Contexts
           optionsBuilder
             .EnableSensitiveDataLogging()
             .UseSqlServer(connectionString);
-            //.LogTo(Console.WriteLine);
+          //.LogTo(Console.WriteLine);
         }
       }
     }

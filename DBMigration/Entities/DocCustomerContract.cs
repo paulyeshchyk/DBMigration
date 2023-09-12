@@ -7,5 +7,6 @@
     public RefContractor contractor { get; set; } = null!;
     public RefCustomer customer { get; set; } = null!;
     public List<RefEmployee> resources { get; set; } = new List<RefEmployee>();
+    public List<DocCustomerContractInvoce> Invoces { get; set; } = new List<DocCustomerContractInvoce>();
   }
 }

@@ -1,5 +1,6 @@
 ﻿using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace DBMigration.Business
 {
@@ -52,6 +53,22 @@ namespace DBMigration.Business
       return result;
     }
 
+    public static DocEmployeeContractAddendum FindOrCreateValidAddendum(this DbSet<DocEmployeeContractAddendum> dbSet, DocEmployeeContract contract)
+    {
+      IQueryable<DocEmployeeContractAddendum> set = dbSet.Where(a => a.IsValid == true && a.Contract == contract);
+      if (set.Count() != 0)
+      {
+        Console.WriteLine($"Found employee valid addendum");
+        return set.First();
+      }
+
+      var result = new DocEmployeeContractAddendum();
+      result.Contract = contract;
+      contract.addendumList.Add(result);
+      dbSet.Add(result);
+      return result;
+    }
+
     public static DocCustomerContract FindOrCreateCustomerContract(this DbSet<DocCustomerContract> dbSet, RefCustomer customer, RefContractor contractor, List<RefEmployee> users)
     {
 
@@ -73,6 +90,22 @@ namespace DBMigration.Business
       dbSet.Add(contract);
 
       return contract;
+    }
+
+    public static DocCustomerContractInvoce FindOrCreateCustomerContractInvoce(this DbSet<DocCustomerContractInvoce> dbSet, DocCustomerContract contract) 
+    {
+      IQueryable<DocCustomerContractInvoce> set = dbSet.Where(i => i.Contract == contract && i.IsClosed == false);
+      if (set.Count() == 1)
+      {
+        Console.WriteLine($"Found invoce for customer: {contract.customer.Name}");
+        return set.First();
+      }
+
+      var invoce = new DocCustomerContractInvoce();
+      invoce.Contract = contract;
+      contract.Invoces.Add(invoce);
+      dbSet.Add(invoce);
+      return invoce;
     }
 
     public static RefCustomer FindOrCreateCustomer(this DbSet<RefCustomer> dbSet, string customerName)
