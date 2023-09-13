@@ -2,34 +2,62 @@
 using DBMigration.Contexts;
 using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DBMigration.Business
 {
   public static class ContractManager
   {
 
+    public static void RemoveAll(this DbSet<RefEmployee> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+    public static void RemoveAll(this DbSet<RefCustomer> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+    public static void RemoveAll(this DbSet<RefContractor> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+    public static void RemoveAll(this DbSet<DocCustomerContract> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocEmployeeContract> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocCustomerContractInvoce> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocEmployeeContractAddendum> dbSet, DbContext context) {
+      dbSet.ToList().ForEach(e => { context.Remove(e); });
+    }
+
     public static DocCustomerContractInvoce FindOrCreateCustomerContractInvoce(this DbSet<DocCustomerContractInvoce> dbSet, DocCustomerContract contract)
     {
       IQueryable<DocCustomerContractInvoce> set = dbSet.Where(i => i.Contract == contract && i.IsClosed == false);
-      if (set.Count() == 1)
+      if (set.Any())
       {
         Console.WriteLine($"Found invoce for customer: {contract.Customer.Name}");
         return set.First();
       }
 
-      var invoce = new DocCustomerContractInvoce
-      {
-        Contract = contract
-      };
+      var invoce = new DocCustomerContractInvoce { Contract = contract };
       contract.Invoces.Add(invoce);
       dbSet.Add(invoce);
       return invoce;
     }
     public static DocCustomerContract FindOrCreateCustomerContract(this DbSet<DocCustomerContract> dbSet, RefCustomer customer, RefContractor contractor, List<RefEmployee> users)
     {
-
       IQueryable<DocCustomerContract> set = dbSet.Where(c => c.Contractor == contractor && c.Customer == customer);
-      if (set.Count() == 1)
+      if (set.Any())
       {
         Console.WriteLine($"Found contract for outsourcer: {contractor.Name}");
         return set.First();
@@ -41,15 +69,11 @@ namespace DBMigration.Business
         Contractor = contractor
       };
 
-      foreach (RefEmployee user in users)
-      {
-        contract.Resources.Add(user);
-      }
+      contract.Resources.AddRange(users);
       dbSet.Add(contract);
 
       return contract;
     }
-
 
     public static void DrawList()
     {

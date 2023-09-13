@@ -10,7 +10,7 @@ namespace DBMigration.Contexts
     public DbSet<DocCustomerContract> CustomerContract { get; set; }
     public DbSet<DocEmployeeContract> EmployeeContract { get; set; }
     public DbSet<DocEmployeeContractAddendum> EmployeeContractAddendum { get; set; }
-    public DbSet<DocCustomerContractInvoce> CustomerContractInvoces {get; set; }
+    public DbSet<DocCustomerContractInvoce> CustomerContractInvoces { get; set; }
     public AppDbContext()
     {
       //Database.EnsureCreated();

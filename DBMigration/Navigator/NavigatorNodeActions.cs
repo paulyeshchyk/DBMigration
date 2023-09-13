@@ -4,62 +4,61 @@ namespace DBMigration.Navigator
 {
   public static class NavigatorNodeActionsContractor
   {
-    public static void Level1ContractorsListBlock(RootNavigator navigator)
+    public static void Level1ContractorsListBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Contractors");
 
       ContractorManager.DrawList();
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
-    public static void Level1ContractListBlock(RootNavigator navigator)
+    public static void Level1ContractListBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Contracts");
 
       ContractManager.DrawList();
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
   }
-
   public static class NavigatorNodeActionsContext
   {
-    public static void Level0GotoContextBlock(RootNavigator navigator)
+    public static void Level0GotoContextBlock(Navigator navigator)
     {
-      navigator.DrawNodes(NavigatorNodeItems.LevelContextNodes);
+      navigator.SetNodes(NavigatorNodeItems.LevelContextNodes);
     }
-    public static void LevelContextWipeDataBlock(RootNavigator navigator)
+    public static void LevelContextWipeDataBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Wipe data");
 
       ContextManager.WipeData();
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
-    public static void LevelContextAddDataBlock(RootNavigator navigator)
+    public static void LevelContextAddDataBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Init data");
 
       ContextManager.PrepareData();
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
   }
   public static class NavigatorNodeActionsEmployee
   {
-    public static void Level1EmployeeBlock(RootNavigator navigator)
+    public static void Level1EmployeeBlock(Navigator navigator)
     {
-      navigator.DrawNodes(NavigatorNodeItems.LevelEmployeeNodes);
+      navigator.SetNodes(NavigatorNodeItems.LevelEmployeeNodes);
     }
-    public static void Level1EmployeeListBlock(RootNavigator navigator)
+    public static void Level1EmployeeListBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Employees");
 
-      EmployeeManager.DrawList();
-      navigator.AnyKeyBlock();
+      EmployeeManager.DrawTable();
+      Navigator.WaitForAnykeyPress();
     }
-    public static void Level1EmployeeAddBlock(RootNavigator navigator)
+    public static void Level1EmployeeAddBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("New Employee");
@@ -69,7 +68,7 @@ namespace DBMigration.Navigator
       if (String.IsNullOrEmpty(employeeName))
       {
         Console.WriteLine("Неправильное значение имени");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
@@ -78,14 +77,14 @@ namespace DBMigration.Navigator
       if (!int.TryParse(employeeAge, out int age))
       {
         Console.WriteLine("Неправильное значение возраста");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
       EmployeeManager.AddEmployee(employeeName, age);
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
-    public static void Level1EmployeeEditBlock(RootNavigator navigator)
+    public static void Level1EmployeeEditBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Employees");
@@ -96,7 +95,7 @@ namespace DBMigration.Navigator
       if (!int.TryParse(employeeid, out int id))
       {
         Console.WriteLine("Неправильный идентификатор");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
@@ -105,7 +104,7 @@ namespace DBMigration.Navigator
       if (String.IsNullOrEmpty(employeeName))
       {
         Console.WriteLine("Неправильное значение имени");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
@@ -114,16 +113,16 @@ namespace DBMigration.Navigator
       if (!int.TryParse(employeeAge, out int age))
       {
         Console.WriteLine("Неправильное значение возраста");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
-      EmployeeManager.EditEmployee(id, employeeName, age);
+      EmployeeManager.EditEmployee(id, e => { e.Name = employeeName; e.Age = age; });
 
       //
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
-    public static void Level1EmployeeDeleteBlock(RootNavigator navigator)
+    public static void Level1EmployeeDeleteBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Удаление элемента Employees");
@@ -134,52 +133,51 @@ namespace DBMigration.Navigator
       if (!int.TryParse(employeeid, out int ident))
       {
         Console.WriteLine("Неправильное значение возраста");
-        navigator.AnyKeyBlock();
+        Navigator.WaitForAnykeyPress();
         return;
       }
 
       EmployeeManager.RemoveEmployee(ident);
       //
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
   }
   public static class NavigatorNodeActionsCustomer
   {
-    public static void Level1CustomerListBlock(RootNavigator navigator)
+    public static void Level1CustomerListBlock(Navigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Customers");
 
       CustomerManager.DrawList();
-      navigator.AnyKeyBlock();
+      Navigator.WaitForAnykeyPress();
     }
   }
   public static class NavigatorNodeActionsRefs
   {
-    public static void Level0GotoReferencesBlock(RootNavigator navigator)
+    public static void Level0GotoReferencesBlock(Navigator navigator)
     {
-      navigator.DrawNodes(NavigatorNodeItems.LevelRefsNodes);
+      navigator.SetNodes(NavigatorNodeItems.LevelRefsNodes);
     }
   }
   public static class NavigatorNodeActionsDocs
   {
-    public static void Level0GotoDocBlock(RootNavigator navigator)
+    public static void Level0GotoDocBlock(Navigator navigator)
     {
-      navigator.DrawNodes(NavigatorNodeItems.Level2DocsNodes);
+      navigator.SetNodes(NavigatorNodeItems.Level2DocsNodes);
     }
   }
   public static class NavigatorNodeActions
   {
-    public static void Level0ExitBlock(RootNavigator navigator)
+    public static void Level0ExitBlock(Navigator navigator)
     {
       Environment.Exit(0);
     }
-    public static void Level1LevelUpBlock(RootNavigator navigator)
+    public static void Level1LevelUpBlock(Navigator navigator)
     {
-      navigator.DrawNodes(NavigatorNodeItems.LevelRootNodes);
+      navigator.SetNodes(NavigatorNodeItems.LevelRootNodes);
     }
   }
-
   public static class NavigatorNodeItems
   {
     public static List<NavigatorNode> LevelRootNodes = new()

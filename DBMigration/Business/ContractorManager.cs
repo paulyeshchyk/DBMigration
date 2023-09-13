@@ -10,7 +10,7 @@ namespace DBMigration.Business
     public static RefContractor FindOrCreateContractor(this DbSet<RefContractor> dbSet, string name)
     {
       IQueryable<RefContractor> set = dbSet.Where(o => name.Equals(o.Name));
-      if (set.Count() == 1)
+      if (set.Any())
       {
         Console.WriteLine($"Found outsourcer by name: {name}");
         return set.First();
@@ -21,6 +21,7 @@ namespace DBMigration.Business
       dbSet.Add(result);
       return result;
     }
+
     public static void DrawList()
     {
       using AppDbContext appDbContext = new();

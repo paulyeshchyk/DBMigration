@@ -8,30 +8,21 @@ namespace DBMigration.Business
     public static void WipeData()
     {
       using AppDbContext appDbContext = new();
-      
-      //EmployeeContractAddendum
-      appDbContext.EmployeeContractAddendum.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //CustomerContractInvoces
-      appDbContext.CustomerContractInvoces.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //EmployeeContract
-      appDbContext.EmployeeContract.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //CustomerContract
-      appDbContext.CustomerContract.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //Contractor
-      appDbContext.Contractor.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //Customer
-      appDbContext.Customer.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
-      //Employees
-      appDbContext.Employees.ToList().
-        ForEach(e => { appDbContext.Remove(e); });
 
-      //
+      appDbContext.EmployeeContractAddendum.RemoveAll(appDbContext);
+
+      appDbContext.CustomerContractInvoces.RemoveAll(appDbContext);
+
+      appDbContext.EmployeeContract.RemoveAll(appDbContext);
+
+      appDbContext.CustomerContract.RemoveAll(appDbContext);
+
+      appDbContext.Contractor.RemoveAll(appDbContext);
+
+      appDbContext.Customer.RemoveAll(appDbContext);
+
+      appDbContext.Employees.RemoveAll(appDbContext);
+
       appDbContext.SaveChanges();
     }
     public static void PrepareData()
@@ -39,8 +30,8 @@ namespace DBMigration.Business
       using AppDbContext appDbContext = new();
 
 
-      RefEmployee employee1 = appDbContext.Employees.FindOrCreateEmployee("Kuzma A");
-      RefEmployee employee2 = appDbContext.Employees.FindOrCreateEmployee("Rybakov S");
+      RefEmployee employee1 = appDbContext.Employees.FindOrCreateEmployee("Kuzma A", null);
+      RefEmployee employee2 = appDbContext.Employees.FindOrCreateEmployee("Rybakov S", null);
       RefContractor contractor = appDbContext.Contractor.FindOrCreateContractor("Senla");
 
       DocEmployeeContract employeeContract1 = appDbContext.EmployeeContract.FindOrCreateEmployeeContract(employee1, contractor);
@@ -69,19 +60,8 @@ namespace DBMigration.Business
 
       appDbContext.SaveChanges();
 
-      //contractContext.Employees.Remove(user1);
-      //contractContext.SaveChanges();
-
       Console.WriteLine("Объекты успешно сохранены");
-
-      var users = appDbContext.Employees.ToList();
-      Console.WriteLine("Список объектов:");
-      foreach (RefEmployee u in users)
-      {
-        Console.WriteLine($"{u.Id}.{u.Name} - {u.Surname ?? "unknown"}");
-
-      }
-
+      appDbContext.Employees.DrawList();
     }
   }
 }

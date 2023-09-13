@@ -2,100 +2,60 @@
 using DBMigration.Contexts;
 using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DBMigration.Business
 {
   public static class EmployeeManager
   {
 
-    public static void AddEmployee(string? name, int? age)
+    public static RefEmployee AddEmployee(string? name, int? age)
     {
       using AppDbContext appDbContext = new();
-      RefEmployee employee = appDbContext.Employees.FindOrCreateEmployee(name);
-      employee.Age = age;
+      RefEmployee result = appDbContext.Employees.FindOrCreateEmployee(name, age);
       appDbContext.SaveChanges();
+      return result;
     }
 
-    public static void EditEmployee(int ident, string name, int? age)
+    public static void EditEmployee(int ident, Action<RefEmployee> action)
     {
       using AppDbContext appDbContext = new();
       appDbContext.Employees
         .Where(e => e.Id == ident)
         .ToList()
-        .ForEach(e =>
-        {
-          e.Name = name;
-          e.Age = age;
-        });
+        .ForEach(action);
       appDbContext.SaveChanges();
     }
+
     public static void RemoveEmployee(int ident)
     {
       using AppDbContext appDbContext = new();
       appDbContext.Employees
         .Where(e => e.Id == ident)
         .ToList()
-        .ForEach(e =>
-        {
-          appDbContext.Remove(e);
-        });
+        .ForEach(e => { appDbContext.Remove(e); });
       appDbContext.SaveChanges();
     }
 
-    public static DocEmployeeContractAddendum FindOrCreateValidAddendum(this DbSet<DocEmployeeContractAddendum> dbSet, DocEmployeeContract contract)
+    public static RefEmployee NewEmployee(this DbSet<RefEmployee> dbSet, string? employeeName, int? age)
     {
-      IQueryable<DocEmployeeContractAddendum> set = dbSet.Where(a => a.IsValid == true && a.Contract == contract);
-      if (set.Count() != 0)
-      {
-        Console.WriteLine($"Found employee valid addendum");
-        return set.First();
-      }
-
-      var result = new DocEmployeeContractAddendum
-      {
-        Contract = contract
-      };
-      contract.AddendumList.Add(result);
-      dbSet.Add(result);
-      return result;
-    }
-    public static DocEmployeeContract FindOrCreateEmployeeContract(this DbSet<DocEmployeeContract> dbSet, RefEmployee employee, RefContractor contractor)
-    {
-      IQueryable<DocEmployeeContract> set = dbSet.Where(c => c.Employee == employee & c.Contractor == contractor);
-      if (set.Count() == 1)
-      {
-        Console.WriteLine($"Found employee contract by name: {employee.Name}");
-        return set.First();
-      }
-
-      Console.WriteLine($"Adding contract for: {employee.Name}");
-      var result = new DocEmployeeContract
-      {
-        Employee = employee,
-        Contractor = contractor
-      };
-      dbSet.Add(result);
-      return result;
-    }
-    public static RefEmployee FindOrCreateEmployee(this DbSet<RefEmployee> dbSet, string employeeName)
-    {
-      IQueryable<RefEmployee> set = dbSet.Where(u => employeeName.Equals(u.Name));
-      if (set.Count() == 1)
-      {
-        Console.WriteLine($"Found user by name: {employeeName}");
-        return set.First();
-      }
-      Console.WriteLine($"Adding user by name: {employeeName}");
-
-      var result = new RefEmployee { Name = employeeName };
+      RefEmployee result = new() { Name = employeeName ?? string.Empty, Age = age };
       dbSet.Add(result);
       return result;
     }
 
-    public static void DrawList()
+    public static RefEmployee FindOrCreateEmployee(this DbSet<RefEmployee> dbSet, string? employeeName, int? age)
+    {
+      IQueryable<RefEmployee> set = dbSet.Where(u => u.Name.Equals(employeeName));
+      if (set.Any()) { return set.First(); }
+
+      return dbSet.NewEmployee(employeeName, age);
+    }
+
+    public static void DrawTable()
     {
       using AppDbContext appDbContext = new();
-      var table = new ConsoleTable("Id", "Name", "Age");
+      ConsoleTable table = new("Id", "Name", "Age");
       var result = (from list
                    in appDbContext.Employees
                     select list).ToList();
@@ -104,6 +64,16 @@ namespace DBMigration.Business
         table.AddRow(employee.Id, employee.Name, employee.Age);
       };
       table.Write(ConsoleTables.Format.Default);
+    }
+
+    public static void DrawList(this DbSet<RefEmployee> dbSet)
+    {
+      var users = dbSet.ToList();
+      Console.WriteLine("Список объектов:");
+      foreach (RefEmployee u in users)
+      {
+        Console.WriteLine($"{u.Id}.{u.Name} - {u.Surname ?? "unknown"}");
+      }
     }
   }
 }
