@@ -7,6 +7,41 @@ namespace DBMigration.Business
 {
   public static class EmployeeManager
   {
+
+    public static void AddEmployee(string? name, int? age)
+    {
+      using AppDbContext appDbContext = new();
+      RefEmployee employee = appDbContext.Employees.FindOrCreateEmployee(name);
+      employee.Age = age;
+      appDbContext.SaveChanges();
+    }
+
+    public static void EditEmployee(int ident, string name, int? age)
+    {
+      using AppDbContext appDbContext = new();
+      appDbContext.Employees
+        .Where(e => e.Id == ident)
+        .ToList()
+        .ForEach(e =>
+        {
+          e.Name = name;
+          e.Age = age;
+        });
+      appDbContext.SaveChanges();
+    }
+    public static void RemoveEmployee(int ident)
+    {
+      using AppDbContext appDbContext = new();
+      appDbContext.Employees
+        .Where(e => e.Id == ident)
+        .ToList()
+        .ForEach(e =>
+        {
+          appDbContext.Remove(e);
+        });
+      appDbContext.SaveChanges();
+    }
+
     public static DocEmployeeContractAddendum FindOrCreateValidAddendum(this DbSet<DocEmployeeContractAddendum> dbSet, DocEmployeeContract contract)
     {
       IQueryable<DocEmployeeContractAddendum> set = dbSet.Where(a => a.IsValid == true && a.Contract == contract);
@@ -60,7 +95,7 @@ namespace DBMigration.Business
     public static void DrawList()
     {
       using AppDbContext appDbContext = new();
-      var table = new ConsoleTable("Id","Name", "Age");
+      var table = new ConsoleTable("Id", "Name", "Age");
       var result = (from list
                    in appDbContext.Employees
                     select list).ToList();

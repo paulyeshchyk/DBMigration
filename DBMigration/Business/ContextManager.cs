@@ -5,9 +5,40 @@ namespace DBMigration.Business
 {
   public static class ContextManager
   {
+    public static void WipeData()
+    {
+      using AppDbContext appDbContext = new();
+      
+      //EmployeeContractAddendum
+      appDbContext.EmployeeContractAddendum.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //CustomerContractInvoces
+      appDbContext.CustomerContractInvoces.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //EmployeeContract
+      appDbContext.EmployeeContract.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //CustomerContract
+      appDbContext.CustomerContract.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //Contractor
+      appDbContext.Contractor.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //Customer
+      appDbContext.Customer.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+      //Employees
+      appDbContext.Employees.ToList().
+        ForEach(e => { appDbContext.Remove(e); });
+
+      //
+      appDbContext.SaveChanges();
+    }
     public static void PrepareData()
     {
       using AppDbContext appDbContext = new();
+
+
       RefEmployee employee1 = appDbContext.Employees.FindOrCreateEmployee("Kuzma A");
       RefEmployee employee2 = appDbContext.Employees.FindOrCreateEmployee("Rybakov S");
       RefContractor contractor = appDbContext.Contractor.FindOrCreateContractor("Senla");

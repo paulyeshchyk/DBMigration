@@ -18,23 +18,25 @@ namespace DBMigration.Navigator
   {
     private readonly List<RootNavigatorNode> nodes = new();
 
-    public void Loop()
+    public void Loop(string? title)
     {
-      Agenda();
+      Agenda(title);
       Console.Write("Select command: ");
       var readKeyResult = Console.ReadLine();
       if (readKeyResult == null)
       {
-        Loop();
+        Loop(title);
         return;
       }
 
+      string? blockTitle = null;
       NodeBlock? block = null;
       try
       {
         int index = int.Parse(readKeyResult);
         var node = nodes.ElementAt(index);
         block = node.ExecutionBlock;
+        blockTitle = node.Title;
       }
       catch (Exception ex)
       {
@@ -43,12 +45,12 @@ namespace DBMigration.Navigator
       }
       if (block == null)
       {
-        Loop();
+        Loop(title);
         return;
       }
       block(this);
       //
-      Loop();
+      Loop(blockTitle);
     }
 
     public void AnyKeyBlock()
@@ -57,10 +59,10 @@ namespace DBMigration.Navigator
       Console.WriteLine("Press any key to continue");
       Console.ReadKey();
     }
-    private void Agenda()
+    private void Agenda(string? title)
     {
       Console.Clear();
-      var table = new ConsoleTable("Command");
+      var table = new ConsoleTable(title);
 
       foreach (var node in nodes.Select((value, i) => new { i, value }))
       {

@@ -8,6 +8,6 @@ public class Program
   public static void Main(string[] args)
   {
     navigator.DrawNodes(NavigatorNodeFactory.LevelRootNodes);
-    navigator.Loop();
+    navigator.Loop("Стэнд");
   }
 }

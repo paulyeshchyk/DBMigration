@@ -29,8 +29,16 @@ namespace DBMigration.Navigator
       CustomerManager.DrawList();
       navigator.AnyKeyBlock();
     }
+    private static void LevelContextWipeDataBlock(RootNavigator navigator)
+    {
+      Console.Clear();
+      Console.WriteLine("Wipe data");
 
-    private static void Level0ContextPreareBlock(RootNavigator navigator)
+      ContextManager.WipeData();
+      navigator.AnyKeyBlock();
+    }
+
+    private static void LevelContextAddDataBlock(RootNavigator navigator)
     {
       Console.Clear();
       Console.WriteLine("Init data");
@@ -56,9 +64,27 @@ namespace DBMigration.Navigator
     private static void Level1EmployeeAddBlock(RootNavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Employees");
+      Console.WriteLine("New Employee");
 
-      //
+      Console.Write("Имя: ");
+      var employeeName = Console.ReadLine();
+      if (String.IsNullOrEmpty(employeeName))
+      {
+        Console.WriteLine("Неправильное значение имени");
+        navigator.AnyKeyBlock();
+        return;
+      }
+
+      Console.Write("Возраст: ");
+      var employeeAge = Console.ReadLine();
+      if (!int.TryParse(employeeAge, out int age))
+      {
+        Console.WriteLine("Неправильное значение возраста");
+        navigator.AnyKeyBlock();
+        return;
+      }
+
+      EmployeeManager.AddEmployee(employeeName, age);
       navigator.AnyKeyBlock();
     }
     private static void Level1EmployeeEditBlock(RootNavigator navigator)
@@ -66,14 +92,54 @@ namespace DBMigration.Navigator
       Console.Clear();
       Console.WriteLine("Employees");
 
+      Console.Write("Идентификатор: ");
+      var employeeid = Console.ReadLine();
+
+      if (!int.TryParse(employeeid, out int id))
+      {
+        Console.WriteLine("Неправильный идентификатор");
+        navigator.AnyKeyBlock();
+        return;
+      }
+
+      Console.Write("Имя: ");
+      var employeeName = Console.ReadLine();
+      if (String.IsNullOrEmpty(employeeName)) {
+        Console.WriteLine("Неправильное значение имени");
+        navigator.AnyKeyBlock();
+        return; 
+      }
+
+      Console.Write("Возраст: ");
+      var employeeAge = Console.ReadLine();
+      if (!int.TryParse(employeeAge, out int age))
+      {
+        Console.WriteLine("Неправильное значение возраста");
+        navigator.AnyKeyBlock();
+        return;
+      }
+
+      EmployeeManager.EditEmployee(id, employeeName, age);
+
       //
       navigator.AnyKeyBlock();
     }
     private static void Level1EmployeeDeleteBlock(RootNavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Employees");
+      Console.WriteLine("Удаление элемента Employees");
 
+      Console.Write("Идентификатор: ");
+      var employeeid = Console.ReadLine();
+
+      if (!int.TryParse(employeeid, out int ident))
+      {
+        Console.WriteLine("Неправильное значение возраста");
+        navigator.AnyKeyBlock();
+        return;
+      }
+
+      EmployeeManager.RemoveEmployee(ident);
       //
       navigator.AnyKeyBlock();
     }
@@ -82,6 +148,12 @@ namespace DBMigration.Navigator
     {
       Environment.Exit(0);
     }
+
+    private static void Level0GotoContextBlock(RootNavigator navigator)
+    {
+      navigator.DrawNodes(LevelContextNodes);
+    }
+
     private static void Level0GotoReferencesBlock(RootNavigator navigator)
     {
       navigator.DrawNodes(LevelRefsNodes);
@@ -99,9 +171,15 @@ namespace DBMigration.Navigator
     public static List<NavigatorNode> LevelRootNodes = new()
     {
       new NavigatorNode("Exit", Level0ExitBlock),
-      new NavigatorNode("Подготовить контекст", Level0ContextPreareBlock),
+      new NavigatorNode("Подготовить контекст", Level0GotoContextBlock),
       new NavigatorNode("Справочники", Level0GotoReferencesBlock),
       new NavigatorNode("Документы", Level0GotoDocBlock)
+    };
+    public static List<NavigatorNode> LevelContextNodes = new()
+    {
+      new NavigatorNode("Exit", Level1LevelUpBlock),
+      new NavigatorNode("Заполнить таблицы тестовыми данными", LevelContextAddDataBlock),
+      new NavigatorNode("Очистить таблицы", LevelContextWipeDataBlock),
     };
 
     private static readonly List<NavigatorNode> LevelRefsNodes = new()
