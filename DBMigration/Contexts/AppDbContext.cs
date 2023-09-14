@@ -1,28 +1,26 @@
 ﻿using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
+
 namespace DBMigration.Contexts
 {
   public class AppDbContext : DbContext
   {
-    public DbSet<RefEmployee> Employees { get; set; }
-    public DbSet<RefCustomer> Customer { get; set; }
-    public DbSet<RefContractor> Contractor { get; set; }
-    public DbSet<DocCustomerContract> CustomerContract { get; set; }
-    public DbSet<DocEmployeeContract> EmployeeContract { get; set; }
-    public DbSet<DocEmployeeContractAddendum> EmployeeContractAddendum { get; set; }
-    public DbSet<DocCustomerContractInvoce> CustomerContractInvoces { get; set; }
     public AppDbContext()
     {
       //Database.EnsureCreated();
     }
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-      base.OnModelCreating(modelBuilder);
-    }
+    public DbSet<RefContractor> Contractor { get; set; }
+    public DbSet<RefCustomer> Customer { get; set; }
+    public DbSet<DocCustomerContract> CustomerContract { get; set; }
+    public DbSet<DocCustomerContractInvoce> CustomerContractInvoces { get; set; }
+    public DbSet<DocEmployeeContract> EmployeeContract { get; set; }
+    public DbSet<DocEmployeeContractAddendum> EmployeeContractAddendum { get; set; }
+    public DbSet<RefEmployee> Employees { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -33,10 +31,15 @@ namespace DBMigration.Contexts
         {
           optionsBuilder
             .EnableSensitiveDataLogging()
-            .UseSqlServer(connectionString);
+            .UseSqlServer(connectionString, builder => builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null));
           //.LogTo(Console.WriteLine);
         }
       }
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
     }
   }
 }

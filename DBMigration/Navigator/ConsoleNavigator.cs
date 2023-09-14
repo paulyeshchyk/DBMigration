@@ -1,14 +1,35 @@
 ﻿namespace DBMigration.Navigator
 {
-  public delegate void NodeBlock(Navigator navigator);
-  public class Navigator
+  public delegate void NodeBlock(ConsoleNavigator navigator);
+
+  public class ConsoleNavigator : INavigator
   {
     private readonly List<NavigatorNode> Nodes = new();
-    private ITableDrawer TableDrawer { get; set; }
 
-    public Navigator(ITableDrawer tableDrawer)
+    public ConsoleNavigator(ITableDrawer tableDrawer)
     {
       this.TableDrawer = tableDrawer;
+    }
+
+    private ITableDrawer TableDrawer { get; set; }
+
+    public void DrawMenuAndWait(string? title)
+    {
+      this.TableDrawer.DrawTable(title, Nodes);
+      WaitForUserCommand(title);
+    }
+
+    public void SetNodes(List<NavigatorNode> nodes)
+    {
+      this.Nodes.Clear();
+      this.Nodes.AddRange(nodes);
+    }
+
+    public void WaitForAnykeyPress()
+    {
+      Console.WriteLine();
+      Console.WriteLine("Press any key to continue");
+      Console.ReadKey();
     }
 
     private NavigatorNode? GetNodeForCommand(string? command)
@@ -41,24 +62,6 @@
       }
       node.ExecutionBlock(this);
       DrawMenuAndWait(node.Title);
-    }
-
-    public void DrawMenuAndWait(string? title)
-    {
-      this.TableDrawer.DrawTable(title, Nodes);
-      WaitForUserCommand(title);
-    }
-
-    public static void WaitForAnykeyPress()
-    {
-      Console.WriteLine();
-      Console.WriteLine("Press any key to continue");
-      Console.ReadKey();
-    }
-    public void SetNodes(List<NavigatorNode> nodes)
-    {
-      this.Nodes.Clear();
-      this.Nodes.AddRange(nodes);
     }
   }
 }

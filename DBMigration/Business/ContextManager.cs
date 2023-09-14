@@ -5,30 +5,9 @@ namespace DBMigration.Business
 {
   public static class ContextManager
   {
-    public static void WipeData()
-    {
-      using AppDbContext appDbContext = new();
-
-      appDbContext.EmployeeContractAddendum.RemoveAll(appDbContext);
-
-      appDbContext.CustomerContractInvoces.RemoveAll(appDbContext);
-
-      appDbContext.EmployeeContract.RemoveAll(appDbContext);
-
-      appDbContext.CustomerContract.RemoveAll(appDbContext);
-
-      appDbContext.Contractor.RemoveAll(appDbContext);
-
-      appDbContext.Customer.RemoveAll(appDbContext);
-
-      appDbContext.Employees.RemoveAll(appDbContext);
-
-      appDbContext.SaveChanges();
-    }
     public static void PrepareData()
     {
       using AppDbContext appDbContext = new();
-
 
       RefEmployee employee1 = appDbContext.Employees.FindOrCreateEmployee("Kuzma A", null);
       RefEmployee employee2 = appDbContext.Employees.FindOrCreateEmployee("Rybakov S", null);
@@ -62,6 +41,41 @@ namespace DBMigration.Business
 
       Console.WriteLine("Объекты успешно сохранены");
       appDbContext.Employees.DrawList();
+    }
+
+    public static void WipeData()
+    {
+      using AppDbContext appDbContext = new();
+
+      var addendum = from a in appDbContext.EmployeeContractAddendum select a;
+      Console.WriteLine($"deleted {addendum.Count()} record(s) from addendum");
+      appDbContext.EmployeeContractAddendum.RemoveAll(appDbContext);
+
+      var invoces = from i in appDbContext.CustomerContractInvoces select i;
+      Console.WriteLine($"deleted {invoces.Count()} record(s) from invoces");
+      appDbContext.CustomerContractInvoces.RemoveAll(appDbContext);
+
+      var contracts = from c in appDbContext.EmployeeContract select c;
+      Console.WriteLine($"deleted {contracts.Count()} record(s) from contracts");
+      appDbContext.EmployeeContract.RemoveAll(appDbContext);
+
+      var customerContracts = from c in appDbContext.CustomerContract select c;
+      Console.WriteLine($"deleted {customerContracts.Count()} record(s) from customerContracts");
+      appDbContext.CustomerContract.RemoveAll(appDbContext);
+
+      var contractors = from c in appDbContext.Contractor select c;
+      Console.WriteLine($"deleted {contractors.Count()} record(s) from contractors");
+      appDbContext.Contractor.RemoveAll(appDbContext);
+
+      var customers = from c in appDbContext.Customer select c;
+      Console.WriteLine($"deleted {customers.Count()} record(s) from customers");
+      appDbContext.Customer.RemoveAll(appDbContext);
+
+      var employees = from e in appDbContext.Employees select e;
+      Console.WriteLine($"deleted {employees.Count()} record(s) from employees");
+      appDbContext.Employees.RemoveAll(appDbContext);
+
+      appDbContext.SaveChanges();
     }
   }
 }

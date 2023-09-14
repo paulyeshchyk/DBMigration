@@ -38,5 +38,32 @@ namespace DBMigration.Business.Tests
       Assert.IsFalse(appDbContext.Customer.Any());
       Assert.IsFalse(appDbContext.Contractor.Any());
     }
+
+    [TestMethod()]
+    public void PrepareDataTest()
+    {
+      ContextManager.PrepareData();
+      using AppDbContext appDbContext = new();
+      Assert.IsTrue(appDbContext.Employees.Where(employee => employee.Name.Equals("Kuzma A")).Any());
+      Assert.IsTrue(appDbContext.Employees.Where(employee => employee.Name.Equals("Rybakov S")).Any());
+
+      Assert.IsTrue(appDbContext.Contractor.Where(employee => employee.Name.Equals("Senla")).Any());
+      Assert.IsTrue(appDbContext.EmployeeContract.Where(contract => contract.Employee.Name.Equals("Kuzma A") & contract.Contractor.Name.Equals("Senla")).Any());
+
+      Assert.IsTrue(appDbContext.Customer.Where(customer => customer.Name.Equals("Thomson Reuters")).Any());
+      Assert.IsTrue(appDbContext.Customer.Where(customer => customer.Name.Equals("MTV Co")).Any());
+
+      Assert.IsTrue(
+        appDbContext.CustomerContract
+        .Where(
+          customerContract => customerContract.Subject.Equals("Eikon") &&
+          customerContract.Customer.Name.Equals("Thomson Reuters") &&
+          customerContract.Contractor.Name.Equals("Senla")
+        ).Any()
+        );
+
+      Assert.IsTrue(appDbContext.CustomerContractInvoces.Where(invoce => invoce.Contract.Subject.Equals("Eikon")).Any());
+
+    }
   }
 }

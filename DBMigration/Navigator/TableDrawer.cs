@@ -6,6 +6,7 @@ namespace DBMigration.Navigator
   {
     public void DrawTable(string? Title, List<NavigatorNode> Nodes);
   }
+
   internal class TableDrawer : ITableDrawer
   {
     void ITableDrawer.DrawTable(string? Title, List<NavigatorNode> Nodes)
@@ -19,7 +20,6 @@ namespace DBMigration.Navigator
         table.AddRow($"{node.i} - {node.value.Title}");
       }
       table.Write(ConsoleTables.Format.Minimal);
-
     }
   }
 }
