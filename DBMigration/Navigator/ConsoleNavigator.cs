@@ -61,7 +61,7 @@
         return;
       }
       node.ExecutionBlock(this);
-      DrawMenuAndWait(node.Title);
+      DrawMenuAndWait(node.Context);
     }
   }
 }

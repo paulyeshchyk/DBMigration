@@ -1,5 +1,6 @@
 ﻿using DBMigration.Contexts;
 using DBMigration.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DBMigration.Business
 {
@@ -38,9 +39,6 @@ namespace DBMigration.Business
       invoce2.Price = 100;
 
       appDbContext.SaveChanges();
-
-      Console.WriteLine("Объекты успешно сохранены");
-      appDbContext.Employees.DrawList();
     }
 
     public static void WipeData()
@@ -76,6 +74,41 @@ namespace DBMigration.Business
       appDbContext.Employees.RemoveAll(appDbContext);
 
       appDbContext.SaveChanges();
+    }
+
+    public static void RemoveAll(this DbSet<RefEmployee> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<RefCustomer> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<RefContractor> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocCustomerContract> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocEmployeeContract> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocCustomerContractInvoce> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
+    }
+
+    public static void RemoveAll(this DbSet<DocEmployeeContractAddendum> dbSet, DbContext context)
+    {
+      dbSet.ToList().ForEach(e => { _ = context.Remove(e); });
     }
   }
 }

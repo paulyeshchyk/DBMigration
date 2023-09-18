@@ -1,5 +1,4 @@
-﻿using ConsoleTables;
-using DBMigration.Contexts;
+﻿using DBMigration.Contexts;
 using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,18 +6,11 @@ namespace DBMigration.Business
 {
   public static class ContractManager
   {
-    public static void DrawList()
+    public static void DrawTable()
     {
       using AppDbContext appDbContext = new();
-      var table = new ConsoleTable("Name", "К-во счетов");
-      var set = appDbContext.CustomerContract
-        .Include(x => x.Invoces);
-
-      foreach (var contract in set.ToList())
-      {
-        table.AddRow(contract.Subject, contract.Invoces.Count);
-      };
-      table.Write(ConsoleTables.Format.Default);
+      var set = appDbContext.CustomerContract.Include(x => x.Invoces);
+      set.ToList().DrawConsoleTable();
     }
 
     public static DocCustomerContract FindOrCreateCustomerContract(this DbSet<DocCustomerContract> dbSet, RefCustomer customer, RefContractor contractor, List<RefEmployee> users)
@@ -55,41 +47,6 @@ namespace DBMigration.Business
       contract.Invoces.Add(invoce);
       dbSet.Add(invoce);
       return invoce;
-    }
-
-    public static void RemoveAll(this DbSet<RefEmployee> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<RefCustomer> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<RefContractor> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<DocCustomerContract> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<DocEmployeeContract> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<DocCustomerContractInvoce> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
-    }
-
-    public static void RemoveAll(this DbSet<DocEmployeeContractAddendum> dbSet, DbContext context)
-    {
-      dbSet.ToList().ForEach(e => { context.Remove(e); });
     }
   }
 }

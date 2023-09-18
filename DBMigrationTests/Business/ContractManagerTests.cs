@@ -63,7 +63,12 @@ namespace DBMigration.Business.Tests
         );
 
       Assert.IsTrue(appDbContext.CustomerContractInvoces.Where(invoce => invoce.Contract.Subject.Equals("Eikon")).Any());
+    }
 
+    [TestMethod()]
+    public void DrawTableTest()
+    {
+      Assert.IsTrue(true);
     }
   }
 }

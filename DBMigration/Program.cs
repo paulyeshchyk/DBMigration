@@ -8,6 +8,7 @@ public class Program
 
   public static void Main(string[] args)
   {
+
     navigator.SetNodes(NavigatorNodeItems.LevelRootNodes);
     navigator.DrawMenuAndWait("Стэнд");
   }

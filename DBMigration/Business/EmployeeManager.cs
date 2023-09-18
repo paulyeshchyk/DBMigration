@@ -1,5 +1,4 @@
-﻿using ConsoleTables;
-using DBMigration.Contexts;
+﻿using DBMigration.Contexts;
 using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,28 +14,11 @@ namespace DBMigration.Business
       return result;
     }
 
-    public static void DrawList(this DbSet<RefEmployee> dbSet)
-    {
-      var users = dbSet.ToList();
-      Console.WriteLine("Список объектов:");
-      foreach (RefEmployee u in users)
-      {
-        Console.WriteLine($"{u.Id}.{u.Name} - {u.Surname ?? "unknown"}");
-      }
-    }
-
     public static void DrawTable()
     {
       using AppDbContext appDbContext = new();
-      ConsoleTable table = new("Id", "Name", "Age");
-      var result = (from list
-                   in appDbContext.Employees
-                    select list).ToList();
-      foreach (var employee in result)
-      {
-        table.AddRow(employee.Id, employee.Name, employee.Age);
-      };
-      table.Write(ConsoleTables.Format.Default);
+      var result = (from list in appDbContext.Employees select list).ToList();
+      result.DrawConsoleTable();
     }
 
     public static void EditEmployee(int ident, Action<RefEmployee> action)

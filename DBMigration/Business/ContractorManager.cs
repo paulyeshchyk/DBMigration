@@ -1,5 +1,4 @@
-﻿using ConsoleTables;
-using DBMigration.Contexts;
+﻿using DBMigration.Contexts;
 using DBMigration.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,18 +6,11 @@ namespace DBMigration.Business
 {
   public static class ContractorManager
   {
-    public static void DrawList()
+    public static void DrawTable()
     {
       using AppDbContext appDbContext = new();
-      var table = new ConsoleTable("Name", "Address");
-      var result = (from list
-                   in appDbContext.Contractor
-                    select list).ToList();
-      foreach (var contractor in result)
-      {
-        table.AddRow(contractor.Name, contractor.Address);
-      };
-      table.Write(ConsoleTables.Format.Default);
+      var result = (from list in appDbContext.Contractor select list).ToList();
+      ConsoleTableHelpers.DrawConsoleTable(result);
     }
 
     public static RefContractor FindOrCreateContractor(this DbSet<RefContractor> dbSet, string name)

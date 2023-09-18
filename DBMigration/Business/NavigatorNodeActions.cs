@@ -7,7 +7,7 @@
       Console.Clear();
       Console.WriteLine("Contractors");
 
-      ContractorManager.DrawList();
+      ContractorManager.DrawTable();
       navigator.WaitForAnykeyPress();
     }
 
@@ -16,7 +16,7 @@
       Console.Clear();
       Console.WriteLine("Contracts");
 
-      ContractManager.DrawList();
+      ContractManager.DrawTable();
       navigator.WaitForAnykeyPress();
     }
   }
@@ -157,7 +157,7 @@
       Console.Clear();
       Console.WriteLine("Customers");
 
-      CustomerManager.DrawList();
+      CustomerManager.DrawTable();
       navigator.WaitForAnykeyPress();
     }
   }
