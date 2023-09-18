@@ -1,10 +1,12 @@
-﻿namespace DBMigration.Navigator
+﻿using DBMigration.Resources;
+
+namespace DBMigration.Navigator
 {
   public delegate void NodeBlock(ConsoleNavigator navigator);
 
   public class ConsoleNavigator : INavigator
   {
-    private readonly List<NavigatorNode> Nodes = new();
+    private readonly List<NavigatorNode> _nodes = new();
 
     public ConsoleNavigator(ITableDrawer tableDrawer)
     {
@@ -15,20 +17,20 @@
 
     public void DrawMenuAndWait(string? title)
     {
-      this.TableDrawer.DrawTable(title, Nodes);
+      this.TableDrawer.DrawTable(title, _nodes);
       WaitForUserCommand(title);
     }
 
     public void SetNodes(List<NavigatorNode> nodes)
     {
-      this.Nodes.Clear();
-      this.Nodes.AddRange(nodes);
+      this._nodes.Clear();
+      this._nodes.AddRange(nodes);
     }
 
     public void WaitForAnykeyPress()
     {
       Console.WriteLine();
-      Console.WriteLine("Press any key to continue");
+      Console.WriteLine(LocalizedStrings.PressAnyKeyMessage);
       Console.ReadKey();
     }
 
@@ -40,7 +42,7 @@
       try
       {
         int index = int.Parse(command);
-        result = Nodes.ElementAt(index);
+        result = _nodes.ElementAt(index);
       }
       catch (Exception ex)
       {

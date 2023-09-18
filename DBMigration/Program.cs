@@ -14,7 +14,7 @@ public class Program
 
     //ConsoleLocalization.SetLocalization("en-US");
     Navigator.SetNodes(NavigatorNodeItems.LevelRootNodes);
-    Navigator.DrawMenuAndWait(strings.StringStand);
+    Navigator.DrawMenuAndWait(LocalizedStrings.StringStand);
   }
  
 }

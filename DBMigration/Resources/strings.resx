@@ -252,4 +252,7 @@
   <data name="ValueAgeIsNotDefined" xml:space="preserve">
 	  <value>not defined</value>
   </data>
+  <data name="PressAnyKeyMessage" xml:space="preserve">
+	  <value>Press any key to continue</value>
+  </data>
 </root>

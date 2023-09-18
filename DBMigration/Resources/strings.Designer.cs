@@ -22,14 +22,14 @@ namespace DBMigration.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class strings {
+    internal class LocalizedStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal strings() {
+        internal LocalizedStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DBMigration.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBMigration.Resources.strings", typeof(strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DBMigration.Resources.LocalizedStrings", typeof(LocalizedStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -201,6 +201,15 @@ namespace DBMigration.Resources {
         internal static string NodeStand {
             get {
                 return ResourceManager.GetString("NodeStand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Press any key to continue.
+        /// </summary>
+        internal static string PressAnyKeyMessage {
+            get {
+                return ResourceManager.GetString("PressAnyKeyMessage", resourceCulture);
             }
         }
         
@@ -457,7 +466,7 @@ namespace DBMigration.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на не указан.
+        ///   Ищет локализованную строку, похожую на not defined.
         /// </summary>
         internal static string ValueAgeIsNotDefined {
             get {
