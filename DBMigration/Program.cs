@@ -1,15 +1,20 @@
 ﻿using DBMigration.Business;
 using DBMigration.Navigator;
+using DBMigration.Resources;
+using System.Globalization;
+using System;
 
 public class Program
 {
-  private static readonly ITableDrawer tableDrawer = new TableDrawer();
-  private static readonly INavigator navigator = new ConsoleNavigator(tableDrawer);
+  private static readonly ITableDrawer TableDrawer = new TableDrawer();
+  private static readonly INavigator Navigator = new ConsoleNavigator(TableDrawer);
 
   public static void Main(string[] args)
   {
 
-    navigator.SetNodes(NavigatorNodeItems.LevelRootNodes);
-    navigator.DrawMenuAndWait("Стэнд");
+    //ConsoleLocalization.SetLocalization("en-US");
+    Navigator.SetNodes(NavigatorNodeItems.LevelRootNodes);
+    Navigator.DrawMenuAndWait(strings.StringStand);
   }
+ 
 }

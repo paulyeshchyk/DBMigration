@@ -1,5 +1,6 @@
 ﻿using DBMigration.Contexts;
 using DBMigration.Entities;
+using DBMigration.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace DBMigration.Business
@@ -18,11 +19,11 @@ namespace DBMigration.Business
       IQueryable<RefContractor> set = dbSet.Where(o => name.Equals(o.Name));
       if (set.Any())
       {
-        Console.WriteLine($"Found outsourcer by name: {name}");
+        Console.WriteLine(string.Format(strings.FoundOutsourcerByNameTemplate, name));
         return set.First();
       }
 
-      Console.WriteLine($"Adding outsourcer by name: {name}");
+      Console.WriteLine(string.Format(strings.AddingOutsourcerByNameTemplate, name) );
       var result = new RefContractor { Name = name };
       dbSet.Add(result);
       return result;

@@ -1,11 +1,16 @@
-﻿namespace DBMigration.Business
+﻿using DBMigration.Resources;
+using System.Globalization;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace DBMigration.Business
 {
   public static class NavigatorNodeActionsContractor
   {
     public static void Level1ContractorsListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Contractors");
+      Console.WriteLine(strings.TitleContractors);
 
       ContractorManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -14,10 +19,22 @@
     public static void Level1ContractListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Contracts");
+      Console.WriteLine(strings.TitleContracts);
 
       ContractManager.DrawTable();
       navigator.WaitForAnykeyPress();
+    }
+  }
+
+  public static class NavigatorNodeTranslationsContext
+  {
+    public static void LevelGotoTranslationsDefaultBlock(DBMigration.Navigator.INavigator navigator)
+    {
+      ConsoleLocalization.SetLocalization("en-en");
+    }
+    public static void LevelGotoTranslationsRuRuBlock(DBMigration.Navigator.INavigator navigator)
+    {
+      ConsoleLocalization.SetLocalization("ru-RU");
     }
   }
 
@@ -31,7 +48,7 @@
     public static void LevelContextWipeDataBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Wipe data");
+      Console.WriteLine(strings.TitleWipeData);
 
       ContextManager.WipeData();
       navigator.WaitForAnykeyPress();
@@ -40,7 +57,7 @@
     public static void LevelContextAddDataBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Init data");
+      Console.WriteLine(strings.TitleInitData);
 
       ContextManager.PrepareData();
       navigator.WaitForAnykeyPress();
@@ -57,7 +74,7 @@
     public static void Level1EmployeeListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Employees");
+      Console.WriteLine(strings.TitleEmployees);
 
       EmployeeManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -155,7 +172,7 @@
     public static void Level1CustomerListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine("Customers");
+      Console.WriteLine(strings.TitleCustomers);
 
       CustomerManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -183,6 +200,11 @@
     public static void Level0ExitBlock(DBMigration.Navigator.INavigator navigator)
     {
       Environment.Exit(0);
+    }
+
+    public static void Level0TranslationsBlock(DBMigration.Navigator.INavigator navigator)
+    {
+      navigator.SetNodes(NavigatorNodeItems.LevelTranslationNodes);
     }
 
     public static void Level1LevelUpBlock(DBMigration.Navigator.INavigator navigator)

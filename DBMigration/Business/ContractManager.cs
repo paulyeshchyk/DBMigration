@@ -1,5 +1,6 @@
 ﻿using DBMigration.Contexts;
 using DBMigration.Entities;
+using DBMigration.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace DBMigration.Business
@@ -15,10 +16,10 @@ namespace DBMigration.Business
 
     public static DocCustomerContract FindOrCreateCustomerContract(this DbSet<DocCustomerContract> dbSet, RefCustomer customer, RefContractor contractor, List<RefEmployee> users)
     {
-      IQueryable<DocCustomerContract> set = dbSet.Where(c => c.Contractor == contractor && c.Customer == customer);
+      var set = dbSet.Where(c => c.Contractor == contractor && c.Customer == customer);
       if (set.Any())
       {
-        Console.WriteLine($"Found contract for outsourcer: {contractor.Name}");
+        Console.WriteLine(strings.FoundContractForOutsourcer, contractor.Name);
         return set.First();
       }
 
@@ -34,19 +35,21 @@ namespace DBMigration.Business
       return contract;
     }
 
-    public static DocCustomerContractInvoce FindOrCreateCustomerContractInvoce(this DbSet<DocCustomerContractInvoce> dbSet, DocCustomerContract contract)
+    public static DocCustomerContractInvoce FindOrCreateCustomerContractInvoice(this DbSet<DocCustomerContractInvoce> dbSet, DocCustomerContract contract)
     {
-      IQueryable<DocCustomerContractInvoce> set = dbSet.Where(i => i.Contract == contract && i.IsClosed == false);
+      var set = dbSet.Where(i => i.Contract == contract && i.IsClosed == false);
       if (set.Any())
       {
-        Console.WriteLine($"Found invoce for customer: {contract.Customer.Name}");
+
+        var message = string.Format(strings.FoundInvoceForCustomerTemplate, contract.Customer.Name);
+        Console.WriteLine(message);
         return set.First();
       }
 
-      var invoce = new DocCustomerContractInvoce { Contract = contract };
-      contract.Invoces.Add(invoce);
-      dbSet.Add(invoce);
-      return invoce;
+      var invoice = new DocCustomerContractInvoce { Contract = contract };
+      contract.Invoces.Add(invoice);
+      dbSet.Add(invoice);
+      return invoice;
     }
   }
 }

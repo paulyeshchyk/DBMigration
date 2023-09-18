@@ -1,4 +1,5 @@
 ﻿using DBMigration.Navigator;
+using DBMigration.Resources;
 
 namespace DBMigration.Business
 {
@@ -6,40 +7,48 @@ namespace DBMigration.Business
   {
     public static readonly List<NavigatorNode> Level2DocsNodes = new()
     {
-      new NavigatorNode("Стэнд", "Главное меню", NavigatorNodeActions.Level1LevelUpBlock),
-      new NavigatorNode("Документы", "Контракты", NavigatorNodeActionsContractor.Level1ContractListBlock)
+      new NavigatorNode(strings.NodeStand, strings.TitleMainMenu, NavigatorNodeActions.Level1LevelUpBlock),
+      new NavigatorNode(strings.NodeDocument, strings.TitleContracts, NavigatorNodeActionsContractor.Level1ContractListBlock)
     };
 
     public static readonly List<NavigatorNode> LevelEmployeeNodes = new()
     {
-      new NavigatorNode("Стэнд", "Главное меню", NavigatorNodeActions.Level1LevelUpBlock),
-      new NavigatorNode("Работники","Список", NavigatorNodeActionsEmployee.Level1EmployeeListBlock),
-      new NavigatorNode("Работники","Добавить",NavigatorNodeActionsEmployee.Level1EmployeeAddBlock),
-      new NavigatorNode("Работники","Изменить",NavigatorNodeActionsEmployee.Level1EmployeeEditBlock),
-      new NavigatorNode("Работники","Удалить", NavigatorNodeActionsEmployee.Level1EmployeeDeleteBlock)
+      new NavigatorNode(strings.NodeStand, strings.TitleMainMenu, NavigatorNodeActions.Level1LevelUpBlock),
+      new NavigatorNode(strings.NodeEmployees,strings.TitleEmployeeList, NavigatorNodeActionsEmployee.Level1EmployeeListBlock),
+      new NavigatorNode(strings.NodeEmployees,strings.TitleAdd,NavigatorNodeActionsEmployee.Level1EmployeeAddBlock),
+      new NavigatorNode(strings.NodeEmployees,strings.TitleEdit,NavigatorNodeActionsEmployee.Level1EmployeeEditBlock),
+      new NavigatorNode(strings.NodeEmployees,strings.TitleDelete, NavigatorNodeActionsEmployee.Level1EmployeeDeleteBlock)
     };
 
     public static readonly List<NavigatorNode> LevelRefsNodes = new()
     {
-      new NavigatorNode("Стэнд", "Главное меню", NavigatorNodeActions.Level1LevelUpBlock),
-      new NavigatorNode("Работники","Работники", NavigatorNodeActionsEmployee.Level1EmployeeBlock),
-      new NavigatorNode("Справочники","Подрядчики",NavigatorNodeActionsContractor.Level1ContractorsListBlock),
-      new NavigatorNode("Справочники","Заказчики", NavigatorNodeActionsCustomer.Level1CustomerListBlock)
+      new NavigatorNode(strings.NodeStand, strings.TitleMainMenu, NavigatorNodeActions.Level1LevelUpBlock),
+      new NavigatorNode(strings.NodeEmployees,strings.TitleEmployees, NavigatorNodeActionsEmployee.Level1EmployeeBlock),
+      new NavigatorNode(strings.NodeReferences,strings.TitleContractors,NavigatorNodeActionsContractor.Level1ContractorsListBlock),
+      new NavigatorNode(strings.NodeReferences,strings.TitleCustomers, NavigatorNodeActionsCustomer.Level1CustomerListBlock)
     };
 
     public static List<NavigatorNode> LevelContextNodes = new()
     {
-      new NavigatorNode("Стэнд", "Главное меню", NavigatorNodeActions.Level1LevelUpBlock),
-      new NavigatorNode("Контекст","Заполнить таблицы тестовыми данными", NavigatorNodeActionsContext.LevelContextAddDataBlock),
-      new NavigatorNode("Контекст","Очистить таблицы", NavigatorNodeActionsContext.LevelContextWipeDataBlock),
+      new NavigatorNode(strings.NodeStand, strings.TitleMainMenu, NavigatorNodeActions.Level1LevelUpBlock),
+      new NavigatorNode(strings.NodeContext,strings.TitleFillTableWithFakeData, NavigatorNodeActionsContext.LevelContextAddDataBlock),
+      new NavigatorNode(strings.NodeContext,strings.TitleWipeTables, NavigatorNodeActionsContext.LevelContextWipeDataBlock),
+    };
+
+    public static List<NavigatorNode> LevelTranslationNodes = new()
+    {
+      new NavigatorNode(strings.NodeStand, strings.TitleMainMenu, NavigatorNodeActions.Level1LevelUpBlock),
+      new NavigatorNode(strings.NodeContext, strings.TitleTranslationsDefault, NavigatorNodeTranslationsContext.LevelGotoTranslationsDefaultBlock),
+      new NavigatorNode(strings.NodeReferences, strings.TitleTranslationsRuRU, NavigatorNodeTranslationsContext.LevelGotoTranslationsRuRuBlock)
     };
 
     public static List<NavigatorNode> LevelRootNodes = new()
     {
-      new NavigatorNode("Стэнд", "Выход", NavigatorNodeActions.Level0ExitBlock),
-      new NavigatorNode("Контекст","Подготовить контекст", NavigatorNodeActionsContext.Level0GotoContextBlock),
-      new NavigatorNode("Справочники","Справочники", NavigatorNodeActionsRefs.Level0GotoReferencesBlock),
-      new NavigatorNode("Документы","Документы", NavigatorNodeActionsDocs.Level0GotoDocBlock)
+      new NavigatorNode(strings.NodeStand, strings.TitleExit, NavigatorNodeActions.Level0ExitBlock),
+      new NavigatorNode(strings.NodeContext,strings.TitleContextPreparation, NavigatorNodeActionsContext.Level0GotoContextBlock),
+      new NavigatorNode(strings.NodeReferences,strings.TitleReferences, NavigatorNodeActionsRefs.Level0GotoReferencesBlock),
+      new NavigatorNode(strings.NodeDocument,strings.TitleDocuments, NavigatorNodeActionsDocs.Level0GotoDocBlock),
+      new NavigatorNode(strings.NodeDocument,strings.TitleTranslations, NavigatorNodeActions.Level0TranslationsBlock)
     };
   }
 }
