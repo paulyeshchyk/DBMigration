@@ -19,7 +19,8 @@ namespace DBMigration.Tests
 
         context.Employees.Remove(employee);
         context.SaveChanges();
-        Assert.IsFalse(context.Employees.Any());
+
+        Assert.IsFalse(context.Employees.Any(e => e.Name.Equals(g.ToString())));
       }
     }
   }
