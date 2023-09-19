@@ -47,31 +47,31 @@ namespace DBMigration.Business
       using AppDbContext appDbContext = new();
 
       var addendum = from a in appDbContext.EmployeeContractAddendum select a;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsForAddendumTemplate, addendum.Count());
+      Console.WriteLine(strings.DeletedRecordsForAddendumTemplate, addendum.Count());
       appDbContext.EmployeeContractAddendum.RemoveAll(appDbContext);
 
       var invoces = from i in appDbContext.CustomerContractInvoces select i;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsForInvocesTemplate, invoces.Count());
+      Console.WriteLine(strings.DeletedRecordsForInvocesTemplate, invoces.Count());
       appDbContext.CustomerContractInvoces.RemoveAll(appDbContext);
 
       var contracts = from c in appDbContext.EmployeeContract select c;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsFromContractsTemplate, contracts.Count());
+      Console.WriteLine(strings.DeletedRecordsFromContractsTemplate, contracts.Count());
       appDbContext.EmployeeContract.RemoveAll(appDbContext);
 
       var customerContracts = from c in appDbContext.CustomerContract select c;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsFromCustomerContractsTemplate, customerContracts.Count());
+      Console.WriteLine(strings.DeletedRecordsFromCustomerContractsTemplate, customerContracts.Count());
       appDbContext.CustomerContract.RemoveAll(appDbContext);
 
       var contractors = from c in appDbContext.Contractor select c;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsFromContractorsTemplate, contractors.Count());
+      Console.WriteLine(strings.DeletedRecordsFromContractorsTemplate, contractors.Count());
       appDbContext.Contractor.RemoveAll(appDbContext);
 
       var customers = from c in appDbContext.Customer select c;
-      Console.WriteLine(LocalizedStrings.DeletedRecordsFromCustomersTemplate, customers.Count());
+      Console.WriteLine(strings.DeletedRecordsFromCustomersTemplate, customers.Count());
       appDbContext.Customer.RemoveAll(appDbContext);
 
       var employees = from e in appDbContext.Employees select e;
-      Console.WriteLine(string.Format(LocalizedStrings.DeletedRecordsFromEmployeesTemplate, 0), employees.Count());
+      Console.WriteLine(string.Format(strings.DeletedRecordsFromEmployeesTemplate, 0), employees.Count());
       appDbContext.Employees.RemoveAll(appDbContext);
 
       appDbContext.SaveChanges();

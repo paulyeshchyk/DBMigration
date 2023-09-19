@@ -8,7 +8,7 @@ namespace DBMigration.Business
   {
     public static void DrawConsoleTable(this List<RefContractor> list)
     {
-      var table = new ConsoleTable(LocalizedStrings.TableColumnContractorName, LocalizedStrings.TableColumnAddress);
+      var table = new ConsoleTable(strings.TableColumnContractorName, strings.TableColumnAddress);
       foreach (var paramValues in list.Select(contractor => new object[] { contractor.Name, contractor.Address }))
       {
         table.AddRow(paramValues);
@@ -19,7 +19,7 @@ namespace DBMigration.Business
 
     public static void DrawConsoleTable(this List<DocCustomerContract> list)
     {
-      var table = new ConsoleTable(LocalizedStrings.TableColumnContractName, LocalizedStrings.TableColumnInvoicesCount);
+      var table = new ConsoleTable(strings.TableColumnContractName, strings.TableColumnInvoicesCount);
       foreach (var paramValues in list.Select(contract => new object[] { contract.Subject, contract.Invoces.Count }))
       {
         table.AddRow(paramValues);
@@ -29,7 +29,7 @@ namespace DBMigration.Business
 
     public static void DrawConsoleTable(this List<RefCustomer> list)
     {
-      var table = new ConsoleTable(LocalizedStrings.TableColumnEmployeeName);
+      var table = new ConsoleTable(strings.TableColumnEmployeeName);
       foreach (var contract in list)
       {
         table.AddRow(contract.Name);
@@ -39,8 +39,8 @@ namespace DBMigration.Business
 
     public static void DrawConsoleTable(this List<RefEmployee> list)
     {
-      ConsoleTable table = new(LocalizedStrings.TableColumnEmployeeId, LocalizedStrings.TableColumnEmployeeName, LocalizedStrings.TableColumnEmployeeAge);
-      foreach (var paramValues in list.Select(employee => new object[] { employee.Id, employee.Name, employee.Age?.ToString() ?? LocalizedStrings.ValueAgeIsNotDefined }))
+      ConsoleTable table = new(strings.TableColumnEmployeeId, strings.TableColumnEmployeeName, strings.TableColumnEmployeeAge);
+      foreach (var paramValues in list.Select(employee => new object[] { employee.Id, employee.Name, employee.Age?.ToString() ?? strings.ValueAgeIsNotDefined }))
       {
         table.AddRow(paramValues);
       };

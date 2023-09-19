@@ -19,7 +19,7 @@ namespace DBMigration.Business
       var set = dbSet.Where(c => c.Contractor == contractor && c.Customer == customer);
       if (set.Any())
       {
-        Console.WriteLine(LocalizedStrings.FoundContractForOutsourcer, contractor.Name);
+        Console.WriteLine(strings.FoundContractForOutsourcer, contractor.Name);
         return set.First();
       }
 
@@ -41,7 +41,7 @@ namespace DBMigration.Business
       if (set.Any())
       {
 
-        var message = string.Format(LocalizedStrings.FoundInvoceForCustomerTemplate, contract.Customer.Name);
+        var message = string.Format(strings.FoundInvoceForCustomerTemplate, contract.Customer.Name);
         Console.WriteLine(message);
         return set.First();
       }

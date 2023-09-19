@@ -10,7 +10,7 @@ namespace DBMigration.Business
     public static void Level1ContractorsListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleContractors);
+      Console.WriteLine(strings.TitleContractors);
 
       ContractorManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -19,7 +19,7 @@ namespace DBMigration.Business
     public static void Level1ContractListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleContracts);
+      Console.WriteLine(strings.TitleContracts);
 
       ContractManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -48,7 +48,7 @@ namespace DBMigration.Business
     public static void LevelContextWipeDataBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleWipeData);
+      Console.WriteLine(strings.TitleWipeData);
 
       ContextManager.WipeData();
       navigator.WaitForAnykeyPress();
@@ -57,7 +57,7 @@ namespace DBMigration.Business
     public static void LevelContextAddDataBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleInitData);
+      Console.WriteLine(strings.TitleInitData);
 
       ContextManager.PrepareData();
       navigator.WaitForAnykeyPress();
@@ -74,7 +74,7 @@ namespace DBMigration.Business
     public static void Level1EmployeeListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleEmployees);
+      Console.WriteLine(strings.TitleEmployees);
 
       EmployeeManager.DrawTable();
       navigator.WaitForAnykeyPress();
@@ -172,7 +172,7 @@ namespace DBMigration.Business
     public static void Level1CustomerListBlock(DBMigration.Navigator.INavigator navigator)
     {
       Console.Clear();
-      Console.WriteLine(LocalizedStrings.TitleCustomers);
+      Console.WriteLine(strings.TitleCustomers);
 
       CustomerManager.DrawTable();
       navigator.WaitForAnykeyPress();

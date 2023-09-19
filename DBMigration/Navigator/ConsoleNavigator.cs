@@ -30,7 +30,7 @@ namespace DBMigration.Navigator
     public void WaitForAnykeyPress()
     {
       Console.WriteLine();
-      Console.WriteLine(LocalizedStrings.PressAnyKeyMessage);
+      Console.WriteLine(strings.PressAnyKeyMessage);
       Console.ReadKey();
     }
 

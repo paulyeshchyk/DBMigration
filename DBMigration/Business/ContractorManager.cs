@@ -19,11 +19,11 @@ namespace DBMigration.Business
       IQueryable<RefContractor> set = dbSet.Where(o => name.Equals(o.Name));
       if (set.Any())
       {
-        Console.WriteLine(string.Format(LocalizedStrings.FoundOutsourcerByNameTemplate, name));
+        Console.WriteLine(string.Format(strings.FoundOutsourcerByNameTemplate, name));
         return set.First();
       }
 
-      Console.WriteLine(string.Format(LocalizedStrings.AddingOutsourcerByNameTemplate, name) );
+      Console.WriteLine(string.Format(strings.AddingOutsourcerByNameTemplate, name) );
       var result = new RefContractor { Name = name };
       dbSet.Add(result);
       return result;
